@@ -3131,6 +3131,21 @@ impl Repository {
             Ok(())
         }
     }
+
+    /// Retrieve the configured identity to use in reflogs.
+    pub fn ident(&self) -> Result<(String, String), Error> {
+        let mut name = ptr::null();
+        let mut email = ptr::null();
+        unsafe {
+            try_call!(raw::git_repository_ident(&mut name, &mut email, self.raw()));
+            let name = CStr::from_ptr(name);
+            let email = CStr::from_ptr(email);
+            Ok((
+                name.to_str().unwrap().to_string(),
+                email.to_str().unwrap().to_string(),
+            ))
+        }
+    }
 }
 
 impl Binding for Repository {
