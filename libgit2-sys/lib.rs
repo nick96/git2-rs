@@ -2119,6 +2119,11 @@ extern "C" {
         callback: git_repository_fetchhead_foreach_cb,
         payload: *mut c_void,
     ) -> c_int;
+    pub fn git_repository_ident(
+        name: *mut *const c_char,
+        email: *mut *const c_char,
+        repo: *mut git_repository,
+    ) -> c_int;
     pub fn git_ignore_add_rule(repo: *mut git_repository, rules: *const c_char) -> c_int;
     pub fn git_ignore_clear_internal_rules(repo: *mut git_repository) -> c_int;
     pub fn git_ignore_path_is_ignored(
